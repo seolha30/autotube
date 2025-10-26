@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오토벤치마킹 - 매일 핫한 영상 추천</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .top-nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 160px;
+            text-align: center;
+        }
+
+        .nav-btn-home {
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-btn-home:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn-guide {
+            background: #ff9800;
+            color: white;
+        }
+
+        .nav-btn-guide:hover {
+            background: #fb8c00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+        }
+
+        .main-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 60px);
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+            height: 48px;
+            box-sizing: border-box;
+        }
+
+        .input-group textarea {
+            height: auto;
+            min-height: 80px;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .url-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .email-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .email-input-wrapper input {
+            flex: 1;
+        }
+
+        .btn-verify {
+            padding: 12px 24px;
+            background: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-verify:hover {
+            background: #fb8c00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-add {
+            background: #667eea;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-add:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-search {
+            background: #28a745;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-search:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-add:disabled,
+        .btn-search:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-reset {
+            flex: 1;
+            background: #6c757d;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .btn-reset:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(108, 117, 125, 0.4);
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled,
+        .btn-reset:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .channels-list {
+            margin-top: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        /* 채널 목록 스크롤바 스타일 */
+        .channels-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .channels-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .channels-list::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+        }
+
+        .channels-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.6);
+        }
+
+        .channel-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+
+        .channel-item:hover {
+            background: #e9ecef;
+        }
+
+        .channel-thumbnail {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #667eea;
+        }
+
+        .channel-info {
+            flex: 1;
+        }
+
+        .channel-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .channel-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .btn-remove:hover {
+            background: #c82333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .channel-count {
+            text-align: right;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .channel-count.warning {
+            color: #dc3545;
+        }
+
+        .btn-reset-small {
+            background: #6c757d;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-reset-small:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .alert.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
+        .alert.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            display: block;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .agreement {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .agreement label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .agreement input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .agreement a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .agreement a:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-header h2 {
+            color: #333;
+            font-size: 22px;
+        }
+
+        .close {
+            color: #999;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal-body {
+            color: #666;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .modal-body h3 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+        }
+
+        .search-results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* 검색 결과 스크롤바 스타일 */
+        .search-results::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .search-results::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .search-results::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+        }
+
+        .search-results::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.6);
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .search-result-item.selected {
+            background: #e3f2fd;
+            border: 2px solid #667eea;
+        }
+
+        .search-result-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .search-result-item:hover {
+            background: #e9ecef;
+        }
+
+        /* 정확한 일치 채널 스타일 (최상단) */
+        .search-result-item.exact-match {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: 2px solid #5568d3;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .search-result-item.exact-match:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .search-result-item.exact-match .channel-name,
+        .search-result-item.exact-match .channel-stats {
+            color: white !important;
+        }
+
+        .exact-match-badge {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .search-empty {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 상단 네비게이션 -->
+    <div class="top-nav">
+        <a href="https://tubelens.kr" class="nav-btn nav-btn-home" target="_blank">🏠 튜브렌즈 HOME</a>
+        <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" class="nav-btn nav-btn-guide" target="_blank">🎬 가이드 영상</a>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="logo">
+            <h1 style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 auto 8px auto;">
+                <img src="https://raw.githubusercontent.com/seolha30/for_tube/main/tubelens.png" alt="튜브렌즈 로고" width="32" height="32" style="position: relative; top: 2px;">
+                <span>오토벤치마킹</span>
+            </h1>
+            <p class="subtitle">어제의 인기영상과 AI 분석을 매일 메일로 받아보세요</p>
+        </div>
+
+        <div id="alertBox" class="alert"></div>
+
+        <form id="mainForm">
+            <div class="row">
+                <div class="input-group">
+                    <label for="youtubeApiKey">YouTube API 키 🔑</label>
+                    <input 
+                        type="text" 
+                        id="youtubeApiKey" 
+                        placeholder="유튜브 API키를 입력하세요요"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="geminiApiKey">Gemini API 키 🤖</label>
+                    <input 
+                        type="text" 
+                        id="geminiApiKey" 
+                        placeholder="Gemini API키를 입력하세요요"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-group">
+                    <label for="sendTime">메일 받을 시간 🕐</label>
+                    <select id="sendTime" required>
+                        <option value="">시간을 선택하세요</option>
+                        <option value="01:00">오전 1시 (01:00)</option>
+                        <option value="02:00">오전 2시 (02:00)</option>
+                        <option value="03:00">오전 3시 (03:00)</option>
+                        <option value="04:00">오전 4시 (04:00)</option>
+                        <option value="05:00">오전 5시 (05:00)</option>
+                        <option value="06:00">오전 6시 (06:00)</option>
+                        <option value="07:00">오전 7시 (07:00)</option>
+                        <option value="08:00">오전 8시 (08:00)</option>
+                        <option value="09:00">오전 9시 (09:00)</option>
+                        <option value="10:00">오전 10시 (10:00)</option>
+                        <option value="11:00">오전 11시 (11:00)</option>
+                        <option value="12:00">오후 12시 (12:00)</option>
+                        <option value="13:00">오후 1시 (13:00)</option>
+                        <option value="14:00">오후 2시 (14:00)</option>
+                        <option value="15:00">오후 3시 (15:00)</option>
+                        <option value="16:00">오후 4시 (16:00)</option>
+                        <option value="17:00">오후 5시 (17:00)</option>
+                        <option value="18:00">오후 6시 (18:00)</option>
+                        <option value="19:00">오후 7시 (19:00)</option>
+                        <option value="20:00">오후 8시 (20:00)</option>
+                        <option value="21:00">오후 9시 (21:00)</option>
+                        <option value="22:00">오후 10시 (22:00)</option>
+                        <option value="23:00">오후 11시 (23:00)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">이메일 주소 📧</label>
+                    <div class="email-input-wrapper">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            placeholder="your@email.com"
+                            required
+                        >
+                        <button type="button" class="btn btn-verify" onclick="verifyEmail()">인증</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="channelUrl">유튜브 채널 추가 (최대 10개) 📺</label>
+                <div class="url-input-wrapper">
+                    <textarea 
+                        id="channelUrl" 
+                        placeholder="채널 URL 또는 채널명을 입력하세요&#10;예: https://www.youtube.com/@튜브렌즈 또는 '침착맨'"
+                        rows="2"
+                    ></textarea>
+                    <div class="button-row">
+                        <button type="button" id="addBtn" class="btn btn-add" onclick="addChannels()">채널 추가</button>
+                        <button type="button" id="searchBtn" class="btn btn-search" onclick="searchChannel()">채널 검색</button>
+                        <button type="button" class="btn btn-reset-small" onclick="resetForm()">초기화</button>
+                    </div>
+                </div>
+                <div class="channel-count" id="channelCount">현재 0개 / 최대 10개</div>
+                <div class="channels-list" id="channelsList">
+                    <div class="empty-state"><font color=red>반드시 결이 비슷한 채널을 추가해주세요! 결이 같아야 분석결과도 좋아집니다.</font></div>
+                </div>
+            </div>
+
+            <div class="agreement">
+                <label>
+                    <input type="checkbox" id="agreeCheckbox" required>
+                    <span>
+                        <a href="#" onclick="openPrivacyModal(); return false;">서비스 이용약관 및 개인정보 처리방침</a>에 동의합니다
+                    </span>
+                </label>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" id="cancelBtn" class="btn btn-reset" onclick="openCancelModal()">🔕 알람 취소</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary">🚀 알람 등록</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <!-- 개인정보 처리방침 모달 -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>서비스 이용약관 및 개인정보 처리방침</h2>
+                <span class="close" onclick="closePrivacyModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h3>1. 수집하는 개인정보</h3>
+                <p>
+                    - 이메일 주소 (메일 발송용)<br>
+                    - YouTube API 키 (각자의 채널 정보 조회용)<br>
+                    - Gemini API 키 (각자의 키워드 분석용)<br>
+                    - 구독 채널 목록
+                </p>
+
+                <h3>2. 개인정보의 이용 목적</h3>
+                <p>
+                    - 유튜브 채널 영상 분석<br>
+                    - 트렌드 키워드 추출<br>
+                    - 추천 영상 메일 발송
+                </p>
+
+                <h3>3. 개인정보의 보관</h3>
+                <p>
+                    - Google Sheets에 저장<br>
+                    - API 키는 암호화되지 않으므로 주의 필요<br>
+                    - 구독 취소 시 모든 정보 삭제<br>
+                    - 해당 api키는 등록자 본인의 영상 수집과 분석만을 위해서 사용됩니다.
+                </p>
+
+                <h3>4. 제3자 제공</h3>
+                <p>
+                    개인정보는 제3자에게 제공되지 않으며, 오직 서비스 제공 목적으로만 사용됩니다.
+                </p>
+
+                <h3>5. 알림 취소</h3>
+                <p>
+                    언제든지 메일 하단의 '🔕 알림 취소' 링크를 통해 서비스를 중단하고 정보를 삭제할 수 있습니다.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 채널 검색 결과 모달 -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>채널 검색 결과</h2>
+                <span class="close" onclick="closeSearchModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="searchResults" class="search-results"></div>
+                <div style="display: flex; gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
+                    <button onclick="closeSearchModal()" class="btn btn-reset" style="flex: 1; padding: 12px;">취소</button>
+                    <button onclick="addSelectedChannels()" class="btn btn-primary" style="flex: 1; padding: 12px;">선택한 채널 등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 등록 완료 모달 -->
+    <div id="successModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-body" style="text-align: center; padding: 40px 30px;">
+                <div id="successEmoji" style="font-size: 64px; margin-bottom: 20px;">🎉</div>
+                <h2 id="successTitle" style="color: #667eea; margin-bottom: 15px; font-size: 24px;">등록 완료!</h2>
+                <div style="color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
+                    <span id="successMessage">환영합니다!</span>
+                </div>
+                <button onclick="closeSuccessModal()" class="btn btn-primary" style="width: 100%; max-width: 200px; padding: 12px;">
+                    확인
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 에러 모달 -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-body" style="text-align: center; padding: 40px 30px;">
+                <div style="font-size: 64px; margin-bottom: 20px;">⚠️</div>
+                <h2 style="color: #dc3545; margin-bottom: 15px; font-size: 24px;">오류 발생</h2>
+                <p style="color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
+                    <span id="errorMessage">오류가 발생했습니다.</span>
+                </p>
+                <button onclick="closeErrorModal()" class="btn btn-reset" style="width: 100%; max-width: 200px; padding: 12px;">
+                    확인
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 알람 취소 모달 -->
+    <div id="cancelModal" class="modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-body" style="padding: 40px 30px;">
+                <h2 style="color: #333; margin-bottom: 10px; font-size: 24px;">알람 취소</h2>
+                <p style="color: #666; margin-bottom: 20px; font-size: 14px;">취소할 이메일 주소를 입력하세요<br>이메일,API키,등록한 모든 채널이 삭제되며,<br>벤치마킹 메일이 발송되지 않습니다.</p>
+                <input type="email" id="cancelEmail" placeholder="example@gmail.com" 
+                       style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; margin-bottom: 20px;">
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="closeCancelModal()" class="btn btn-reset" style="flex: 1; padding: 12px;">취소</button>
+                    <button onclick="confirmCancel()" class="btn btn-primary" style="flex: 1; padding: 12px;">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ⭐⭐⭐ 중요: 백엔드 API URL (Vercel 배포 후 여기를 수정하세요!)
+        const API_BASE_URL = 'https://autotube-theta.vercel.app';
+
+        // 전역 변수
+        let channels = [];
+        let selectedChannelIndices = []; // 선택된 채널 인덱스 저장
+        const API_BASE = 'https://your-n8n-webhook-url.com'; // n8n 웹훅 URL로 변경 필요
+
+        // 쿠키 관련 함수
+        function setCookie(name, value, days = 365) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
+
+        // 알림 표시
+        function showAlert(message, type = 'info') {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = message;
+            alertBox.className = `alert ${type}`;
+            
+            setTimeout(() => {
+                alertBox.className = 'alert';
+            }, 5000);
+        }
+
+        // 페이지 로드 시 쿠키에서 데이터 불러오기
+        function loadFromCookies() {
+            const savedApiKey = getCookie('youtubeApiKey');
+            const savedGeminiKey = getCookie('geminiApiKey');
+            const savedEmail = getCookie('email');
+            const savedTime = getCookie('sendTime');
+            const savedChannels = getCookie('channels');
+
+            if (savedApiKey) document.getElementById('youtubeApiKey').value = savedApiKey;
+            if (savedGeminiKey) document.getElementById('geminiApiKey').value = savedGeminiKey;
+            if (savedEmail) document.getElementById('email').value = savedEmail;
+            if (savedTime) document.getElementById('sendTime').value = savedTime;
+            
+            // 채널 정보가 있고, 빈 배열이 아닐 때만 불러오기
+            if (savedChannels && savedChannels !== '[]' && savedChannels !== '') {
+                try {
+                    const parsedChannels = JSON.parse(savedChannels);
+                    if (Array.isArray(parsedChannels) && parsedChannels.length > 0) {
+                        channels = parsedChannels;
+                        renderChannels();
+                    } else {
+                        channels = [];
+                    }
+                } catch (e) {
+                    channels = [];
+                }
+            } else {
+                channels = [];
+            }
+        }
+
+        // 폼 초기화
+        function resetForm() {
+            if (!confirm('모든 입력 내용을 초기화하시겠습니까?')) {
+                return;
+            }
+            
+            // 1. 전역 변수 channels 완전히 비우기
+            window.channels = [];
+            channels = [];
+            
+            // 2. 이메일 인증 상태 리셋
+            isEmailVerified = false;
+            
+            // 3. 인증 버튼 원래대로
+            const verifyBtn = document.querySelector('.btn-verify');
+            if (verifyBtn) {
+                verifyBtn.textContent = '인증';
+                verifyBtn.disabled = false;
+                verifyBtn.style.cssText = '';
+            }
+            
+            // 4. 이메일 입력창 활성화
+            const emailInput = document.getElementById('email');
+            if (emailInput) {
+                emailInput.readOnly = false;
+                emailInput.style.background = '';
+            }
+            
+            // 5. 쿠키 완전 삭제
+            document.cookie.split(";").forEach(function(c) { 
+                const name = c.split("=")[0].trim();
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=" + window.location.hostname;
+            });
+            
+            // 6. 폼 리셋
+            document.getElementById('mainForm').reset();
+            
+            // 7. 화면 업데이트
+            renderChannels();
+            
+            // 8. 확인 메시지
+            showAlert('초기화 완료!', 'success');
+        }
+
+        // 채널 추가 (여러 URL 동시 처리 가능)
+        async function addChannels() {
+            const channelInput = document.getElementById('channelUrl').value.trim();
+            const youtubeApiKey = document.getElementById('youtubeApiKey').value.trim();
+
+            if (!channelInput) {
+                showAlert('채널 URL 또는 채널명을 입력해주세요', 'warning');
+                return;
+            }
+
+            if (!youtubeApiKey) {
+                showAlert('YouTube API 키를 먼저 입력해주세요', 'warning');
+                return;
+            }
+
+            // 줄바꿈으로 분리
+            const lines = channelInput.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0);
+
+            if (lines.length === 0) {
+                showAlert('채널 URL 또는 채널명을 입력해주세요', 'warning');
+                return;
+            }
+
+            // YouTube URL이 있는지 확인
+            const youtubeUrls = lines.filter(line => 
+                line.includes('youtube.com') || line.includes('youtu.be')
+            );
+
+            // 모든 줄이 YouTube URL인 경우
+            if (youtubeUrls.length === lines.length && youtubeUrls.length > 0) {
+                // 여러 URL 동시 추가
+                await addMultipleChannelsFromUrls(youtubeUrls, youtubeApiKey);
+            } else if (lines.length === 1) {
+                // 단일 입력 (URL 또는 검색어)
+                const input = lines[0];
+                
+                if (input.includes('youtube.com') || input.includes('youtu.be')) {
+                    // 단일 URL 처리
+                    await addSingleChannelFromUrl(input, youtubeApiKey);
+                } else {
+                    // 검색어 처리 - 검색 모달 열기
+                    searchChannel();
+                }
+            } else {
+                showAlert('YouTube URL과 일반 텍스트를 섞어서 입력할 수 없습니다', 'warning');
+            }
+        }
+
+        // 단일 URL에서 채널 추가
+        async function addSingleChannelFromUrl(url, apiKey) {
+            const addBtn = document.getElementById('addBtn');
+            const originalText = addBtn.textContent;
+            addBtn.textContent = '추가 중...';
+            addBtn.disabled = true;
+
+            try {
+                const channelId = await extractChannelIdFromUrl(url, apiKey);
+                if (!channelId) {
+                    showAlert('채널 정보를 가져올 수 없습니다', 'error');
+                    return;
+                }
+
+                // 채널 상세 정보 가져오기
+                const detailsUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key=${apiKey}`;
+                const response = await fetch(detailsUrl);
+                const data = await response.json();
+
+                if (!response.ok || !data.items || data.items.length === 0) {
+                    throw new Error('채널 정보를 가져올 수 없습니다');
+                }
+
+                const channel = data.items[0];
+                const channelData = {
+                    url: `https://www.youtube.com/channel/${channelId}`,
+                    channelId: channelId,
+                    title: channel.snippet.title,
+                    thumbnail: channel.snippet.thumbnails.high?.url || channel.snippet.thumbnails.default?.url,
+                    subscriberCount: parseInt(channel.statistics.subscriberCount) || 0,
+                    videoCount: parseInt(channel.statistics.videoCount) || 0
+                };
+
+                // 중복 체크
+                if (channels.some(ch => ch.channelId === channelId)) {
+                    showAlert('이미 추가된 채널입니다', 'info');
+                    return;
+                }
+
+                if (channels.length >= 10) {
+                    showAlert('최대 10개까지만 추가할 수 있습니다', 'error');
+                    return;
+                }
+
+                channels.push(channelData);
+                renderChannels();
+                saveToCookies();
+                document.getElementById('channelUrl').value = '';
+                showAlert('채널이 추가되었습니다', 'success');
+
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('채널 추가 실패: ' + error.message, 'error');
+            } finally {
+                addBtn.textContent = originalText;
+                addBtn.disabled = false;
+            }
+        }
+
+        // 여러 URL에서 채널 동시 추가
+        async function addMultipleChannelsFromUrls(urls, apiKey) {
+            const addBtn = document.getElementById('addBtn');
+            const originalText = addBtn.textContent;
+            addBtn.disabled = true;
+
+            let successCount = 0;
+            let duplicateCount = 0;
+            let errorCount = 0;
+
+            for (let i = 0; i < urls.length; i++) {
+                const url = urls[i];
+                addBtn.textContent = `추가 중... ${i + 1}/${urls.length}`;
+
+                try {
+                    // 이미 10개면 중단
+                    if (channels.length >= 10) {
+                        showAlert('최대 10개까지만 추가할 수 있습니다', 'warning');
+                        break;
+                    }
+
+                    const channelId = await extractChannelIdFromUrl(url, apiKey);
+                    if (!channelId) {
+                        errorCount++;
+                        continue;
+                    }
+
+                    // 중복 체크
+                    if (channels.some(ch => ch.channelId === channelId)) {
+                        duplicateCount++;
+                        continue;
+                    }
+
+                    // 채널 상세 정보 가져오기
+                    const detailsUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key=${apiKey}`;
+                    const response = await fetch(detailsUrl);
+                    const data = await response.json();
+
+                    if (!response.ok || !data.items || data.items.length === 0) {
+                        errorCount++;
+                        continue;
+                    }
+
+                    const channel = data.items[0];
+                    const channelData = {
+                        url: `https://www.youtube.com/channel/${channelId}`,
+                        channelId: channelId,
+                        title: channel.snippet.title,
+                        thumbnail: channel.snippet.thumbnails.high?.url || channel.snippet.thumbnails.default?.url,
+                        subscriberCount: parseInt(channel.statistics.subscriberCount) || 0,
+                        videoCount: parseInt(channel.statistics.videoCount) || 0
+                    };
+
+                    channels.push(channelData);
+                    successCount++;
+
+                    // 짧은 딜레이 (API 호출 제한 방지)
+                    await new Promise(resolve => setTimeout(resolve, 300));
+
+                } catch (error) {
+                    console.error('Error processing URL:', url, error);
+                    errorCount++;
+                }
+            }
+
+            renderChannels();
+            saveToCookies();
+            document.getElementById('channelUrl').value = '';
+
+            // 결과 메시지
+            let message = `총 ${urls.length}개 중 ${successCount}개 추가됨`;
+            if (duplicateCount > 0) message += `, ${duplicateCount}개 중복`;
+            if (errorCount > 0) message += `, ${errorCount}개 실패`;
+
+            showAlert(message, successCount > 0 ? 'success' : 'warning');
+
+            addBtn.textContent = originalText;
+            addBtn.disabled = false;
+        }
+
+        // URL에서 채널 ID 추출 (비디오/채널/핸들 모두 지원)
+        async function extractChannelIdFromUrl(url, apiKey) {
+            try {
+                // URL 디코딩 (한글 등 인코딩된 문자 처리)
+                url = decodeURIComponent(url);
+
+                // 1. 채널 ID 직접 추출 (youtube.com/channel/xxx)
+                const channelIdMatch = url.match(/youtube\.com\/channel\/([^/?&]+)/);
+                if (channelIdMatch) {
+                    return channelIdMatch[1];
+                }
+
+                // 2. 핸들 추출 (youtube.com/@xxx)
+                const handleMatch = url.match(/youtube\.com\/@([^/?&]+)/);
+                if (handleMatch) {
+                    let handle = handleMatch[1];
+                    // URL 디코딩 한 번 더 (혹시 모를 이중 인코딩)
+                    try {
+                        handle = decodeURIComponent(handle);
+                    } catch (e) {
+                        // 이미 디코딩됨
+                    }
+                    
+                    // @ 기호와 함께 검색 (더 정확함)
+                    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${encodeURIComponent('@' + handle)}&maxResults=5&key=${apiKey}`;
+                    const response = await fetch(searchUrl);
+                    const data = await response.json();
+                    
+                    if (data.items && data.items.length > 0) {
+                        // 정확히 일치하는 핸들 찾기
+                        for (const item of data.items) {
+                            const channelHandle = item.snippet.customUrl || item.snippet.title;
+                            if (channelHandle.toLowerCase().includes(handle.toLowerCase())) {
+                                return item.snippet.channelId;
+                            }
+                        }
+                        // 정확히 못 찾으면 첫 번째 결과
+                        return data.items[0].snippet.channelId;
+                    }
+                }
+
+                // 3. 비디오 URL (youtube.com/watch?v=xxx 또는 youtu.be/xxx)
+                let videoId = null;
+                const watchMatch = url.match(/[?&]v=([^&]+)/);
+                const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+                const shortsMatch = url.match(/youtube\.com\/shorts\/([^?&]+)/);
+                
+                if (watchMatch) {
+                    videoId = watchMatch[1];
+                } else if (shortMatch) {
+                    videoId = shortMatch[1];
+                } else if (shortsMatch) { // 🆕 Shorts 처리
+                    videoId = shortsMatch[1];
+                }
+
+                if (videoId) {
+                    // 비디오 정보에서 채널 ID 가져오기
+                    const videoUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`;
+                    const response = await fetch(videoUrl);
+                    const data = await response.json();
+                    if (data.items && data.items.length > 0) {
+                        return data.items[0].snippet.channelId;
+                    }
+                }
+
+                return null;
+
+            } catch (error) {
+                console.error('Error extracting channel ID:', error);
+                return null;
+            }
+        }
+
+
+        // 채널 검색 (직접 YouTube API 호출)
+        async function searchChannel() {
+            const channelUrl = document.getElementById('channelUrl').value.trim();
+            const youtubeApiKey = document.getElementById('youtubeApiKey').value.trim();
+
+            if (!channelUrl) {
+                showAlert('채널 URL 또는 채널명을 입력해주세요', 'warning');
+                return;
+            }
+
+            if (!youtubeApiKey) {
+                showAlert('YouTube API 키를 먼저 입력해주세요', 'warning');
+                return;
+            }
+
+            const searchBtn = document.getElementById('searchBtn');
+            const originalText = searchBtn.textContent;
+            searchBtn.textContent = '검색 중...';
+            searchBtn.disabled = true;
+
+            const query = channelUrl.replace(/https?:\/\/(www\.)?youtube\.com\/@?/, '').split('/')[0];
+
+            try {
+                // YouTube API로 직접 검색
+                const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${encodeURIComponent(query)}&maxResults=10&key=${youtubeApiKey}`;
+                
+                const searchResponse = await fetch(searchUrl);
+                const searchData = await searchResponse.json();
+
+                if (!searchResponse.ok) {
+                    throw new Error(searchData.error?.message || '검색 실패');
+                }
+
+                if (!searchData.items || searchData.items.length === 0) {
+                    showAlert('검색 결과가 없습니다', 'info');
+                    searchBtn.textContent = originalText;
+                    searchBtn.disabled = false;
+                    return;
+                }
+
+                // 각 채널의 상세 정보 가져오기
+                const channelIds = searchData.items.map(item => item.snippet.channelId).join(',');
+                const detailsUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelIds}&key=${youtubeApiKey}`;
+                
+                const detailsResponse = await fetch(detailsUrl);
+                const detailsData = await detailsResponse.json();
+
+                if (!detailsResponse.ok) {
+                    throw new Error(detailsData.error?.message || '채널 정보 조회 실패');
+                }
+
+                // 결과 정리
+                const channelsResult = detailsData.items.map(channel => ({
+                    channelId: channel.id,
+                    title: channel.snippet.title,
+                    thumbnail: channel.snippet.thumbnails.high?.url || channel.snippet.thumbnails.default?.url,
+                    subscriberCount: parseInt(channel.statistics.subscriberCount) || 0,
+                    videoCount: parseInt(channel.statistics.videoCount) || 0
+                }));
+
+                // 검색어와 정확도 순으로 정렬 (파이썬 방식 그대로)
+                const searchQuery = query.toLowerCase();
+                
+                // 정확한 일치와 부분 일치로 분류
+                const exactMatches = [];
+                const partialMatches = [];
+                
+                channelsResult.forEach(channel => {
+                    const channelTitle = channel.title.toLowerCase();
+                    
+                    // 파이썬과 동일: 완전일치 OR 시작일치 OR 끝일치
+                    const isExactMatch = (
+                        channelTitle === searchQuery ||
+                        channelTitle.startsWith(searchQuery) ||
+                        channelTitle.endsWith(searchQuery)
+                    );
+                    
+                    // isExactMatch 속성 추가
+                    channel.isExactMatch = isExactMatch;
+                    
+                    if (isExactMatch) {
+                        exactMatches.push(channel);
+                    } else {
+                        partialMatches.push(channel);
+                    }
+                });
+                
+                // 각 그룹 내에서 구독자 수로 정렬
+                exactMatches.sort((a, b) => b.subscriberCount - a.subscriberCount);
+                partialMatches.sort((a, b) => b.subscriberCount - a.subscriberCount);
+                
+                // 정확한 일치를 먼저, 그 다음 부분 일치
+                const sortedChannels = [...exactMatches, ...partialMatches];
+
+                showSearchResults(sortedChannels);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('검색에 실패했습니다: ' + error.message, 'error');
+            } finally {
+                searchBtn.textContent = originalText;
+                searchBtn.disabled = false;
+            }
+        }
+
+        // 검색 결과 표시
+        function showSearchResults(results) {
+            const modal = document.getElementById('searchModal');
+            const resultsContainer = document.getElementById('searchResults');
+            
+            // 선택 초기화
+            selectedChannelIndices = [];
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div class="search-empty">검색 결과가 없습니다</div>';
+                modal.style.display = 'block';
+                return;
+            }
+
+            resultsContainer.innerHTML = results.map((channel, index) => {
+                // 정확한 일치 여부 확인 (isExactMatch 속성 사용)
+                const isExact = channel.isExactMatch || false;
+                const exactClass = isExact ? 'exact-match' : '';
+                const exactBadge = isExact ? '<span class="exact-match-badge">✨ 정확한 일치</span>' : '';
+                
+                return `
+                    <div class="search-result-item ${exactClass}" onclick="toggleChannelSelection(${index})">
+                        <input type="checkbox" id="channel-${index}" onclick="event.stopPropagation(); toggleChannelSelection(${index})">
+                        <img src="${channel.thumbnail}" alt="${channel.title}" class="channel-thumbnail">
+                        <div class="channel-info">
+                            <div class="channel-name">${channel.title}</div>
+                            <div class="channel-stats">
+                                <span class="stat-item">👥 ${formatNumber(channel.subscriberCount)}</span>
+                                <span class="stat-item">🎥 ${formatNumber(channel.videoCount)}</span>
+                            </div>
+                        </div>
+                        ${exactBadge}
+                    </div>
+                `;
+            }).join('');
+
+            // 검색 결과를 전역 변수에 저장
+            window.searchResults = results;
+            modal.style.display = 'block';
+        }
+
+        // 채널 선택/해제 토글 (행 클릭 또는 체크박스 클릭)
+        function toggleChannelSelection(index) {
+            const checkbox = document.getElementById(`channel-${index}`);
+            const item = checkbox.closest('.search-result-item');
+            
+            if (selectedChannelIndices.includes(index)) {
+                // 이미 선택된 경우 -> 해제
+                selectedChannelIndices = selectedChannelIndices.filter(i => i !== index);
+                checkbox.checked = false;
+                item.classList.remove('selected');
+            } else {
+                // 선택되지 않은 경우 -> 선택
+                selectedChannelIndices.push(index);
+                checkbox.checked = true;
+                item.classList.add('selected');
+            }
+        }
+
+        // 선택한 채널들 한번에 추가
+        function addSelectedChannels() {
+            if (selectedChannelIndices.length === 0) {
+                showAlert('채널을 선택해주세요', 'warning');
+                return;
+            }
+
+            let addedCount = 0;
+            let alreadyExistsCount = 0;
+            let exceedLimit = false;
+
+            selectedChannelIndices.forEach(index => {
+                const selected = window.searchResults[index];
+
+                // 최대 10개 체크
+                if (channels.length >= 10) {
+                    exceedLimit = true;
+                    return;
+                }
+
+                // 중복 체크
+                if (channels.some(ch => ch.channelId === selected.channelId)) {
+                    alreadyExistsCount++;
+                    return;
+                }
+
+                // 채널 추가
+                channels.push({
+                    url: `https://www.youtube.com/channel/${selected.channelId}`,
+                    channelId: selected.channelId,
+                    title: selected.title,
+                    thumbnail: selected.thumbnail,
+                    subscriberCount: selected.subscriberCount,
+                    videoCount: selected.videoCount
+                });
+                addedCount++;
+            });
+
+            // 결과 메시지
+            if (addedCount > 0) {
+                renderChannels();
+                saveToCookies();
+                showAlert(`${addedCount}개 채널이 추가되었습니다`, 'success');
+            }
+            
+            if (alreadyExistsCount > 0) {
+                showAlert(`${alreadyExistsCount}개는 이미 추가된 채널입니다`, 'info');
+            }
+            
+            if (exceedLimit) {
+                showAlert('최대 10개까지만 추가할 수 있습니다', 'error');
+            }
+
+            closeSearchModal();
+            document.getElementById('channelUrl').value = '';
+        }
+
+        // 기존 단일 선택 함수 (혹시 필요할 수도 있으니 남겨둠)
+        function selectSearchResult(index) {
+            toggleChannelSelection(index);
+        }
+
+        function removeChannel(index) {
+            channels.splice(index, 1);
+            renderChannels();
+            saveToCookies();
+            showAlert('채널이 삭제되었습니다', 'info');
+        }
+
+        function renderChannels() {
+            const container = document.getElementById('channelsList');
+            const countDisplay = document.getElementById('channelCount');
+
+            // 채널 개수 표시 업데이트 (span이 있으면 사용, 없으면 전체 텍스트 변경)
+            const spanElement = countDisplay.querySelector('span');
+            if (spanElement) {
+                spanElement.textContent = `현재 ${channels.length}개 / 최대 10개`;
+            } else {
+                countDisplay.textContent = `현재 ${channels.length}개 / 최대 10개`;
+            }
+            
+            if (channels.length >= 10) {
+                countDisplay.classList.add('warning');
+            } else {
+                countDisplay.classList.remove('warning');
+            }
+
+            if (channels.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <font color=red>반드시 결이 비슷한 채널을 추가해주세요! 결이 같아야 분석결과도 좋아집니다.</font>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = channels.map((channel, index) => `
+                <div class="channel-item">
+                    <img src="${channel.thumbnail}" alt="${channel.title}" class="channel-thumbnail">
+                    <div class="channel-info">
+                        <div class="channel-name">${channel.title}</div>
+                        <div class="channel-stats">
+                            <span class="stat-item">
+                                👥 ${formatNumber(channel.subscriberCount)}
+                            </span>
+                            <span class="stat-item">
+                                🎥 ${formatNumber(channel.videoCount)}
+                            </span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-remove" onclick="removeChannel(${index})">삭제</button>
+                </div>
+            `).join('');
+        }
+
+        function formatNumber(num) {
+            if (num >= 10000) {
+                return (num / 10000).toFixed(1) + '만';
+            }
+            return num.toLocaleString();
+        }
+
+        function saveToCookies() {
+            setCookie('youtubeApiKey', document.getElementById('youtubeApiKey').value);
+            setCookie('geminiApiKey', document.getElementById('geminiApiKey').value);
+            setCookie('email', document.getElementById('email').value);
+            setCookie('sendTime', document.getElementById('sendTime').value);
+            setCookie('channels', JSON.stringify(channels));
+        }
+
+        function openPrivacyModal() {
+            document.getElementById('privacyModal').style.display = 'block';
+        }
+
+        function closePrivacyModal() {
+            document.getElementById('privacyModal').style.display = 'none';
+        }
+
+        function closeSearchModal() {
+            document.getElementById('searchModal').style.display = 'none';
+        }
+
+        // 성공 모달 열기
+        function openSuccessModal(message) {
+            document.getElementById('successMessage').innerHTML = message;
+            document.getElementById('successModal').style.display = 'block';
+        }
+
+        // 성공 모달 닫기
+        function closeSuccessModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        // 에러 모달 열기
+        function openErrorModal(message) {
+            document.getElementById('errorMessage').innerHTML = message;
+            document.getElementById('errorModal').style.display = 'block';
+        }
+
+        // 에러 모달 닫기
+        function closeErrorModal() {
+            document.getElementById('errorModal').style.display = 'none';
+        }
+
+        // 모달 외부 클릭 시 닫기
+        window.onclick = function(event) {
+            const privacyModal = document.getElementById('privacyModal');
+            const searchModal = document.getElementById('searchModal');
+            const successModal = document.getElementById('successModal');
+            const errorModal = document.getElementById('errorModal');
+            const cancelModal = document.getElementById('cancelModal');
+            
+            if (event.target == privacyModal) {
+                privacyModal.style.display = 'none';
+            }
+            if (event.target == searchModal) {
+                searchModal.style.display = 'none';
+            }
+            if (event.target == successModal) {
+                closeSuccessModal();
+            }
+            if (event.target == errorModal) {
+                closeErrorModal();
+            }
+            if (event.target == cancelModal) {
+                closeCancelModal();
+            }
+        }
+
+        // 폼 제출 (백엔드 API로 전송)
+        document.getElementById('mainForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // 동의 체크 확인
+            const agreeCheckbox = document.getElementById('agreeCheckbox');
+            if (!agreeCheckbox.checked) {
+                showAlert('서비스 이용 동의가 필요합니다', 'error');
+                return;
+            }
+
+            if (channels.length === 0) {
+                showAlert('최소 1개 이상의 채널을 추가해주세요', 'error');
+                return;
+            }
+
+            const youtubeApiKey = document.getElementById('youtubeApiKey').value;
+            const geminiApiKey = document.getElementById('geminiApiKey').value;
+            const email = document.getElementById('email').value.trim();
+            const sendTime = document.getElementById('sendTime').value;
+
+            // 이메일 유효성 검사
+            if (!email) {
+                showAlert('이메일을 입력해주세요', 'error');
+                return;
+            }
+
+            // 이메일 형식 검사 (정규식)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert('올바른 이메일 형식이 아닙니다', 'error');
+                return;
+            }
+
+            // 이메일 인증 확인
+            if (!isEmailVerified) {
+                showAlert('이메일 인증을 먼저 해주세요', 'error');
+                return;
+            }
+
+            saveToCookies();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            submitBtn.disabled = true;
+            cancelBtn.disabled = true;
+
+            // Gemini API 키 검증
+            submitBtn.innerHTML = '<span class="loading"></span> Gemini 키 확인 중...';
+            const geminiVerify = await verifyGeminiApiKey(geminiApiKey);
+            if (!geminiVerify.success) {
+                submitBtn.disabled = false;
+                cancelBtn.disabled = false;
+                submitBtn.innerHTML = '🚀 알람 등록';
+                openErrorModal(`❌ Gemini API 키 오류<br>Gemini API 키가 올바르지 않습니다.<br><br>💡 확인사항:<br>• API 키를 정확히 입력했는지<br>• Gemini API가 '활성화'되어 있는지<br>• YouTube API 키와 혼동하지 않았는지`);
+                return;
+            }
+
+            // 검증 완료 - 등록 진행
+            submitBtn.innerHTML = '<span class="loading"></span> 등록 중...';
+
+            try {
+                // 백엔드 API로 데이터 전송
+                const response = await fetch(`${API_BASE_URL}/api/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        youtubeApiKey: youtubeApiKey,
+                        geminiApiKey: geminiApiKey,
+                        sendTime: sendTime,
+                        channels: channels.map(ch => ch.channelId)
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('successEmoji').textContent = '🎉';
+                    document.getElementById('successTitle').textContent = '등록 완료!';
+                    openSuccessModal('매일 선택하신 시간에<br>추천 영상 메일을 받아보실 수 있습니다. 📧');
+                    
+                    setTimeout(() => {
+                        // 채널 목록만 초기화 (API 키와 이메일은 유지)
+                        channels = [];
+                        renderChannels();
+                    }, 2000);
+                } else {
+                    openErrorModal(result.error || '등록 중 오류가 발생했습니다.');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                openErrorModal('등록 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
+            } finally {
+                // 성공이든 실패든 무조건 버튼 복구
+                submitBtn.disabled = false;
+                cancelBtn.disabled = false;
+                submitBtn.innerHTML = '🚀 알람 등록';
+            }
+        });
+
+        // Enter 키로 채널 추가 (Shift+Enter는 줄바꿈)
+        document.getElementById('channelUrl').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                addChannels();
+            }
+        });
+
+        // 채널 목록만 초기화
+        function resetChannels() {
+            if (confirm('채널 목록을 초기화하시겠습니까?')) {
+                channels = [];
+                renderChannels();
+                saveToCookies();
+                showAlert('채널 목록이 초기화되었습니다', 'info');
+            }
+        }
+
+        // 이메일 인증 상태
+        let isEmailVerified = false;
+        
+        // 이메일 인증
+        async function verifyEmail() {
+            const email = document.getElementById('email').value.trim();
+            
+            if (!email) {
+                showAlert('이메일을 입력해주세요', 'error');
+                return;
+            }
+
+            // 이메일 형식 검사
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert('올바른 이메일 형식이 아닙니다', 'error');
+                return;
+            }
+
+            const verifyBtn = document.querySelector('.btn-verify');
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = '확인 중...';
+
+            try {
+                // 백엔드 API로 요청
+                const response = await fetch(`${API_BASE_URL}/api/verify-email`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    isEmailVerified = true;
+                    showAlert('✅ ' + result.message, 'success');
+                    verifyBtn.textContent = '✓ 인증완료';
+                    verifyBtn.style.cssText = 'background: #28a745 !important; cursor: not-allowed;';
+                    document.getElementById('email').readOnly = true;
+                    document.getElementById('email').style.background = '#f0f0f0';
+                } else {
+                    isEmailVerified = false;
+                    showAlert('❌ ' + result.message, 'error');
+                    verifyBtn.disabled = false;
+                    verifyBtn.textContent = '인증';
+                }
+            } catch (error) {
+                isEmailVerified = false;
+                showAlert('인증 중 오류가 발생했습니다', 'error');
+                verifyBtn.disabled = false;
+                verifyBtn.textContent = '인증';
+            }
+        }
+
+        // 알람 취소 모달 열기
+        function openCancelModal() {
+            document.getElementById('cancelModal').style.display = 'block';
+        }
+
+        // 알람 취소 모달 닫기
+        function closeCancelModal() {
+            document.getElementById('cancelModal').style.display = 'none';
+            document.getElementById('cancelEmail').value = '';
+        }
+
+        // 알람 취소 확인
+        async function confirmCancel() {
+            const email = document.getElementById('cancelEmail').value.trim();
+            
+            if (!email) {
+                showAlert('이메일을 입력해주세요', 'error');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                showAlert('올바른 이메일 형식이 아닙니다', 'error');
+                return;
+            }
+
+            try {
+                // 백엔드 API로 삭제 요청 전송
+                const response = await fetch(`${API_BASE_URL}/api/cancel`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                });
+
+                const result = await response.json();
+
+                closeCancelModal();
+
+                if (result.success) {
+                    // 삭제 성공
+                    document.getElementById('successEmoji').textContent = '✅';
+                    document.getElementById('successTitle').textContent = '취소 완료!';
+                    document.getElementById('successMessage').innerHTML = '등록하신 이메일/API키/채널들이<br>모두 삭제되었습니다.<br>더 이상 벤치마킹 메일이 전송되지 않습니다.';
+                    document.getElementById('successModal').style.display = 'block';
+                } else {
+                    // 삭제 실패 (이메일 없음 등)
+                    openErrorModal(result.error || '해당 이메일을 찾을 수 없습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                closeCancelModal();
+                openErrorModal('취소 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
+            }
+        }
+
+        // 약관 동의 체크박스 이벤트
+        document.getElementById('agreeCheckbox').addEventListener('change', function() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = !this.checked;
+        });
+
+        // YouTube API 키 검증
+        async function verifyYouTubeApiKey(apiKey) {
+            try {
+                // 유튜브 공식 채널로 테스트 (1 quota만 소모)
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=id&id=UC-lHJZR3Gqxm24_Vd_AJ5Yw&key=${apiKey}`);
+                const data = await response.json();
+                
+                if (response.ok && data.items && data.items.length > 0) {
+                    return { success: true };
+                } else {
+                    return { 
+                        success: false, 
+                        error: data.error?.message || 'YouTube API 키가 유효하지 않습니다'
+                    };
+                }
+            } catch (error) {
+                return { success: false, error: 'YouTube API 키 검증 중 오류가 발생했습니다' };
+            }
+        }
+
+        // Gemini API 키 검증
+        async function verifyGeminiApiKey(apiKey) {
+            try {
+                // 최소 요청으로 테스트 (1 request만 소모)
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: "test" }] }],
+                        generationConfig: { maxOutputTokens: 1 }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.candidates) {
+                    return { success: true };
+                } else {
+                    return { 
+                        success: false, 
+                        error: data.error?.message || 'Gemini API 키가 유효하지 않습니다'
+                    };
+                }
+            } catch (error) {
+                return { success: false, error: 'Gemini API 키 검증 중 오류가 발생했습니다' };
+            }
+        }
+
+        // 페이지 로드 시 쿠키 데이터 불러오기
+        window.addEventListener('load', function() {
+            loadFromCookies();
+            // 초기 상태: 버튼 비활성화
+            document.getElementById('submitBtn').disabled = true;
+        });
+    </script>
+</body>
+</html>
