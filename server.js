@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const path = require('path'); 
 require('dotenv').config();
 
 const app = express();
@@ -9,6 +10,12 @@ const PORT = process.env.PORT || 3000;
 // CORS 설정 - 모든 도메인 허용 (나중에 특정 도메인만 허용하도록 변경 가능)
 app.use(cors());
 app.use(express.json());
+
+// ⬅️ 이 2줄 추가!
+app.use(express.static('.'));  // 정적 파일 제공
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // 환경변수에서 Google Apps Script URL 가져오기
 const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL;
