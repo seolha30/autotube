@@ -787,7 +787,7 @@
             </div>
 
             <div class="input-group">
-                <label for="channelUrl">유튜브 채널 추가 (최대 10개) 📺</label>
+                <label for="channelUrl">유튜브 채널 추가 (최대 20개) 📺</label>
                 <div class="url-input-wrapper">
                     <textarea 
                         id="channelUrl" 
@@ -800,7 +800,7 @@
                         <button type="button" class="btn btn-reset-small" onclick="resetForm()">초기화</button>
                     </div>
                 </div>
-                <div class="channel-count" id="channelCount">현재 0개 / 최대 10개</div>
+                <div class="channel-count" id="channelCount">현재 0개 / 최대 20개</div>
                 <div class="channels-list" id="channelsList">
                     <div class="empty-state"><font color=red>반드시 결이 비슷한 채널을 추가해주세요! 결이 같아야 분석결과도 좋아집니다.</font></div>
                 </div>
@@ -1131,8 +1131,8 @@
                     return;
                 }
 
-                if (channels.length >= 10) {
-                    showAlert('최대 10개까지만 추가할 수 있습니다', 'error');
+                if (channels.length >= 20) {
+                    showAlert('최대 20개까지만 추가할 수 있습니다', 'error');
                     return;
                 }
 
@@ -1166,9 +1166,9 @@
                 addBtn.textContent = `추가 중... ${i + 1}/${urls.length}`;
 
                 try {
-                    // 이미 10개면 중단
-                    if (channels.length >= 10) {
-                        showAlert('최대 10개까지만 추가할 수 있습니다', 'warning');
+                    // 이미 20개면 중단
+                    if (channels.length >= 20) {
+                        showAlert('최대 20개까지만 추가할 수 있습니다', 'warning');
                         break;
                     }
 
@@ -1483,8 +1483,8 @@
             selectedChannelIndices.forEach(index => {
                 const selected = window.searchResults[index];
 
-                // 최대 10개 체크
-                if (channels.length >= 10) {
+                // 최대 20개 체크
+                if (channels.length >= 20) {
                     exceedLimit = true;
                     return;
                 }
@@ -1519,7 +1519,7 @@
             }
             
             if (exceedLimit) {
-                showAlert('최대 10개까지만 추가할 수 있습니다', 'error');
+                showAlert('최대 20개까지만 추가할 수 있습니다', 'error');
             }
 
             closeSearchModal();
@@ -1545,12 +1545,12 @@
             // 채널 개수 표시 업데이트 (span이 있으면 사용, 없으면 전체 텍스트 변경)
             const spanElement = countDisplay.querySelector('span');
             if (spanElement) {
-                spanElement.textContent = `현재 ${channels.length}개 / 최대 10개`;
+                spanElement.textContent = `현재 ${channels.length}개 / 최대 20개`;
             } else {
-                countDisplay.textContent = `현재 ${channels.length}개 / 최대 10개`;
+                countDisplay.textContent = `현재 ${channels.length}개 / 최대 20개`;
             }
             
-            if (channels.length >= 10) {
+            if (channels.length >= 20) {
                 countDisplay.classList.add('warning');
             } else {
                 countDisplay.classList.remove('warning');
